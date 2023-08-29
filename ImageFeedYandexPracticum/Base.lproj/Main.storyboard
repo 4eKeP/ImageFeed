@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" name="YP Black"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="278" id="Olb-9x-aNK" customClass="ImagesListCell" customModule="ImageFeedYandexPracticum" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="278" id="Olb-9x-aNK" customClass="ImagesListCell" customModule="ImageFeedYandexPracticum" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="375" height="278"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Olb-9x-aNK" id="DJ3-Q5-PdU">
@@ -29,7 +29,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="qNS-MV-S6u" userLabel="Cell Image">
-                                                    <rect key="frame" x="20" y="11" width="335" height="256"/>
+                                                    <rect key="frame" x="16" y="4" width="343" height="270"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="16"/>
@@ -44,7 +44,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GIj-bh-HiF" userLabel="Like Button">
-                                                    <rect key="frame" x="311" y="11" width="44" height="44"/>
+                                                    <rect key="frame" x="315" y="4" width="44" height="44"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="No Active">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -52,16 +52,15 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="qNS-MV-S6u" secondAttribute="trailing" id="2In-1x-EPw"/>
+                                                <constraint firstAttribute="trailing" secondItem="qNS-MV-S6u" secondAttribute="trailing" constant="16" id="2In-1x-EPw"/>
                                                 <constraint firstItem="GIj-bh-HiF" firstAttribute="trailing" secondItem="qNS-MV-S6u" secondAttribute="trailing" id="2uj-lA-Ymz"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="ZYa-Ih-2DP" secondAttribute="bottom" constant="8" id="9wP-iG-PxA"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZYa-Ih-2DP" secondAttribute="trailing" id="JFc-BI-GIg"/>
                                                 <constraint firstItem="GIj-bh-HiF" firstAttribute="top" secondItem="qNS-MV-S6u" secondAttribute="top" id="JYw-9Q-IY3"/>
-                                                <constraint firstItem="qNS-MV-S6u" firstAttribute="top" secondItem="DJ3-Q5-PdU" secondAttribute="topMargin" id="QhI-wE-l0o"/>
-                                                <constraint firstItem="qNS-MV-S6u" firstAttribute="leading" secondItem="DJ3-Q5-PdU" secondAttribute="leadingMargin" id="S4s-d7-wdm"/>
+                                                <constraint firstItem="qNS-MV-S6u" firstAttribute="top" secondItem="DJ3-Q5-PdU" secondAttribute="top" constant="4" id="QhI-wE-l0o"/>
+                                                <constraint firstItem="qNS-MV-S6u" firstAttribute="leading" secondItem="DJ3-Q5-PdU" secondAttribute="leading" constant="16" id="S4s-d7-wdm"/>
                                                 <constraint firstItem="ZYa-Ih-2DP" firstAttribute="leading" secondItem="DJ3-Q5-PdU" secondAttribute="leadingMargin" constant="8" id="egP-6x-5B9"/>
-                                                <constraint firstItem="GIj-bh-HiF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qNS-MV-S6u" secondAttribute="leading" id="gXo-BL-4y1"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="qNS-MV-S6u" secondAttribute="bottom" id="pom-gN-KZI"/>
+                                                <constraint firstAttribute="bottom" secondItem="qNS-MV-S6u" secondAttribute="bottom" constant="4" id="pom-gN-KZI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="YP Black"/>
