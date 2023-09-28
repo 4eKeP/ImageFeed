@@ -10,61 +10,50 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    var profileImageView = UIImageView()
-    var nameLabel = UILabel()
-    var loginNameLabel = UILabel()
-    var descriptionLabel = UILabel()
-    var logoutButton = UIButton()
+    private lazy var profileImageView: UIImageView = {
+        var view = UIImageView()
+        let profileImage = UIImage(named: "avatar")
+        view = UIImageView(image: profileImage)
+        view.layer.cornerRadius = 35
+        return view
+    }()
+    
+    private lazy var nameLabel: UILabel = {
+        var label = UILabel()
+        label.text = "Екатерина Новикова"
+        label.textColor = UIColor.ypWhite
+        label.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
+        return label
+    }()
+    
+    private lazy var loginNameLabel: UILabel = {
+        var label = UILabel()
+        label.text = "@ekaterina_nov"
+        label.textColor = UIColor.ypGray
+        label.font.withSize(13)
+        return label
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        var label = UILabel()
+        label.text = "Hello, World!"
+        label.textColor = UIColor.ypWhite
+        label.font.withSize(13)
+        return label
+    }()
+    
+    private lazy var logoutButton: UIButton = {
+        var button = UIButton()
+        guard let logoutImage = UIImage(named: "logout_button") else {return button}
+        button.setImage(logoutImage, for: .normal)
+        button.addTarget(self, action: #selector(logoutButtonDidPressed), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addProfileImage()
-        addNameLabel()
-        addLoginNameLabel()
-        addDescriptionLabel()
-        addLogoutButton()
+        setupViews()
         addConstraints()
-    }
-    
-    private func addProfileImage() {
-        let profileImage = UIImage(named: "Avatar")
-        profileImageView = UIImageView(image: profileImage)
-        profileImageView.layer.cornerRadius = 35
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(profileImageView)
-    }
-    
-    private func addNameLabel() {
-        nameLabel.text = "Екатерина Новикова"
-        nameLabel.textColor = UIColor.ypWhite
-        nameLabel.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(nameLabel)
-    }
-    
-    private func addLoginNameLabel() {
-        loginNameLabel.text = "@ekaterina_nov"
-        loginNameLabel.textColor = UIColor.ypGray
-        loginNameLabel.font.withSize(13)
-        loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginNameLabel)
-    }
-    
-    private func addDescriptionLabel() {
-        descriptionLabel.text = "Hello, World!"
-        descriptionLabel.textColor = UIColor.ypWhite
-        descriptionLabel.font.withSize(13)
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(descriptionLabel)
-    }
-    
-    private func addLogoutButton() {
-        guard let logoutImage = UIImage(named: "Logout_Button") else {return}
-        logoutButton.setImage(logoutImage, for: .normal)
-        logoutButton.addTarget(self, action: #selector(logoutButtonDidPressed), for: .touchUpInside)
-        
-        logoutButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(logoutButton)
     }
     
     private func addConstraints() {
@@ -83,6 +72,19 @@ final class ProfileViewController: UIViewController {
             logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
+    
+    private func setupViews() {
+        [profileImageView,
+         nameLabel,
+         loginNameLabel,
+         descriptionLabel,
+         logoutButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+    }
+    
     @objc
     private func logoutButtonDidPressed() {
         print("logout pressed")
