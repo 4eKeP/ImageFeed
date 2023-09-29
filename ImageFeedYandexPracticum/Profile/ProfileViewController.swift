@@ -22,7 +22,7 @@ final class ProfileViewController: UIViewController {
         var label = UILabel()
         label.text = "Екатерина Новикова"
         label.textColor = UIColor.ypWhite
-        label.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         return label
     }()
     
@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController {
         var label = UILabel()
         label.text = "@ekaterina_nov"
         label.textColor = UIColor.ypGray
-        label.font.withSize(13)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
     }()
     
@@ -38,7 +38,7 @@ final class ProfileViewController: UIViewController {
         var label = UILabel()
         label.text = "Hello, World!"
         label.textColor = UIColor.ypWhite
-        label.font.withSize(13)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
     }()
     
