@@ -14,6 +14,9 @@
 		844A82B32A99FB9F0047778E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844A82B22A99FB9F0047778E /* Assets.xcassets */; };
 		844A82B62A99FB9F0047778E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844A82B42A99FB9F0047778E /* LaunchScreen.storyboard */; };
 		844A82DE2A9DBC040047778E /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82DD2A9DBC040047778E /* ImagesListCell.swift */; };
+		84B39AFE2AB2B741008DD303 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B39AFD2AB2B741008DD303 /* ProfileViewController.swift */; };
+		84C2EFB72AC336AE000C5420 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C2EFB62AC336AE000C5420 /* UIColorExtensions.swift */; };
+		84C6F53F2ABB4CCB00614923 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C6F53E2ABB4CCB00614923 /* SingleImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		844A82B52A99FB9F0047778E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		844A82B72A99FB9F0047778E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		844A82DD2A9DBC040047778E /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		84B39AFD2AB2B741008DD303 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		84C2EFB62AC336AE000C5420 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		84C6F53E2ABB4CCB00614923 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8444D5BC2ABECBA8005BE3FB /* SingleImage */ = {
+			isa = PBXGroup;
+			children = (
+				84C6F53E2ABB4CCB00614923 /* SingleImageViewController.swift */,
+			);
+			path = SingleImage;
+			sourceTree = "<group>";
+		};
 		844A829D2A99FB9E0047778E = {
 			isa = PBXGroup;
 			children = (
@@ -59,8 +73,11 @@
 			isa = PBXGroup;
 			children = (
 				844A82A92A99FB9E0047778E /* AppDelegate.swift */,
+				84C2EFB52AC3366E000C5420 /* Halper */,
 				844A82AB2A99FB9E0047778E /* SceneDelegate.swift */,
 				844A82DF2A9DBC460047778E /* ImagesList */,
+				84B39AFC2AB2B71A008DD303 /* Profile */,
+				8444D5BC2ABECBA8005BE3FB /* SingleImage */,
 				844A82AF2A99FB9E0047778E /* Main.storyboard */,
 				844A82B22A99FB9F0047778E /* Assets.xcassets */,
 				844A82B42A99FB9F0047778E /* LaunchScreen.storyboard */,
@@ -76,6 +93,22 @@
 				844A82DD2A9DBC040047778E /* ImagesListCell.swift */,
 			);
 			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		84B39AFC2AB2B71A008DD303 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				84B39AFD2AB2B741008DD303 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		84C2EFB52AC3366E000C5420 /* Halper */ = {
+			isa = PBXGroup;
+			children = (
+				84C2EFB62AC336AE000C5420 /* UIColorExtensions.swift */,
+			);
+			path = Halper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -106,7 +139,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					844A82A52A99FB9E0047778E = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -150,8 +183,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				844A82AE2A99FB9E0047778E /* ImagesListViewController.swift in Sources */,
+				84C2EFB72AC336AE000C5420 /* UIColorExtensions.swift in Sources */,
 				844A82DE2A9DBC040047778E /* ImagesListCell.swift in Sources */,
+				84B39AFE2AB2B741008DD303 /* ProfileViewController.swift in Sources */,
 				844A82AA2A99FB9E0047778E /* AppDelegate.swift in Sources */,
+				84C6F53F2ABB4CCB00614923 /* SingleImageViewController.swift in Sources */,
 				844A82AC2A99FB9E0047778E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +250,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -274,6 +311,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
