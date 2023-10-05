@@ -6,10 +6,12 @@
 //
 
 import Foundation
+
 final class OAuth2Service {
+    private let oauth2TokenStorage = OAuth2TokenStorage()
     static let shared = OAuth2Service()
     private let urlSession = URLSession.shared
-    private (set) var authToken: String? {
+    private var authToken: String? {
         get {
             return OAuth2TokenStorage().token
         }
@@ -26,6 +28,7 @@ final class OAuth2Service {
                 switch result {
                 case .success(let body):
                     let authToken = body.accessToken
+                    print(authToken)
                     self.authToken = authToken
                     completion(.success(authToken))
                 case .failure(let error):
@@ -60,15 +63,17 @@ extension OAuth2Service {
             httpMethod: "POST",
             baseURL: URL(string: "https://unsplash.com")!
         ) }
+    
     private struct OAuthTokenResponseBody: Decodable {
         let accessToken: String
         let tokenType: String
         let scope: String
         let createdAt: Int
+        
         enum CodingKeys: String, CodingKey {
             case accessToken = "access_token"
             case tokenType = "token_type"
-            case scope = "public+read_user+write_likes"
+            case scope
             case createdAt = "created_at"
         }
     }
@@ -86,17 +91,9 @@ extension URLRequest {
         return request
     }
 }
-// MARK: - Network Connection
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-}
+
 extension URLSession {
-    func data(
-        for request: URLRequest,
-        completion: @escaping (Result<Data, Error>) -> Void
-    ) -> URLSessionTask {
+    func data(for request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionTask {
         let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)

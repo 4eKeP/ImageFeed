@@ -27,17 +27,8 @@ final class WebViewViewController: UIViewController {
         
         webView.navigationDelegate = self
         
-        var urlComponents = URLComponents(string: Constants.UnsplashAuthorizeURLString)
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.AccessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.RedirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.AccessScope)
-        ]
-        guard let url = urlComponents?.url else { return }
+        loadWebView()
         
-        let request = URLRequest(url: url)
-        webView.load(request)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -60,6 +51,21 @@ final class WebViewViewController: UIViewController {
     
     @IBAction private func didTapBackButton(_ sender: Any) {
         delegate?.webViewViewControllerDidCancel(self)
+    }
+}
+
+private extension WebViewViewController {
+    func loadWebView() {
+        var urlComponents = URLComponents(string: Constants.UnsplashAuthorizeURLString)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "client_id", value: Constants.AccessKey),
+            URLQueryItem(name: "redirect_uri", value: Constants.RedirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: Constants.AccessScope)
+        ]
+        guard let url = urlComponents?.url else { return }
+        let request = URLRequest(url: url)
+        webView.load(request)
     }
 }
 
