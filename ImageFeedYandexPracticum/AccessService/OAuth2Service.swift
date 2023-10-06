@@ -28,7 +28,6 @@ final class OAuth2Service {
                 switch result {
                 case .success(let body):
                     let authToken = body.accessToken
-                    print(authToken)
                     self.authToken = authToken
                     completion(.success(authToken))
                 case .failure(let error):
@@ -55,9 +54,9 @@ extension OAuth2Service {
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
-            + "?client_id=\(Constants.AccessKey)"
-            + "&&client_secret=\(Constants.SecretKey)"
-            + "&&redirect_uri=\(Constants.RedirectURI)"
+            + "?client_id=\(Constants.accessKey)"
+            + "&&client_secret=\(Constants.secretKey)"
+            + "&&redirect_uri=\(Constants.redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             httpMethod: "POST",
@@ -84,7 +83,7 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseURL: URL = Constants.DefaultBaseURL!
+        baseURL: URL = Constants.defaultBaseURL!
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod
