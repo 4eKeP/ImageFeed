@@ -8,9 +8,12 @@
 import Foundation
 
 final class OAuth2Service {
-    private let oauth2TokenStorage = OAuth2TokenStorage()
     static let shared = OAuth2Service()
+    private let oauth2TokenStorage = OAuth2TokenStorage()
     private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     private var authToken: String? {
         get {
             return OAuth2TokenStorage().token
@@ -19,21 +22,33 @@ final class OAuth2Service {
             OAuth2TokenStorage().token = newValue
         }
     }
+    
     func fetchOAuthToken(
         _ code: String,
         completion: @escaping (Result<String, Error>) -> Void ){
+            
+            assert(Thread.isMainThread)
+            if lastCode == code { return }
+            task?.cancel()
+            lastCode = code
+            
             let request = authTokenRequest(code: code)
             let task = object(for: request) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let body):
-                    let authToken = body.accessToken
-                    self.authToken = authToken
-                    completion(.success(authToken))
-                case .failure(let error):
-                    completion(.failure(error))
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let body):
+                        let authToken = body.accessToken
+                        self.authToken = authToken
+                        completion(.success(authToken))
+                        self.task = nil
+                    case .failure(let error):
+                        self.lastCode = nil
+                        completion(.failure(error))
+                    }
                 }
             }
+            self.task = task
             task.resume()
         }
 }
