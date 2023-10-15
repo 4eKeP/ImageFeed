@@ -27,6 +27,7 @@
 		84F308F22AC9AD9900FBE579 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F308F12AC9AD9900FBE579 /* AuthViewController.swift */; };
 		84F308F52AC9AEC400FBE579 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F308F42AC9AEC400FBE579 /* WebViewViewController.swift */; };
 		84F308F92ACB265600FBE579 /* WebViewViewControllerDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F308F82ACB265600FBE579 /* WebViewViewControllerDelegateProtocol.swift */; };
+		84F71B692ADC044300A76482 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F71B682ADC044300A76482 /* UIBlockingProgressHUD.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		84F308F12AC9AD9900FBE579 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		84F308F42AC9AEC400FBE579 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		84F308F82ACB265600FBE579 /* WebViewViewControllerDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegateProtocol.swift; sourceTree = "<group>"; };
+		84F71B682ADC044300A76482 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			children = (
 				84C2EFB62AC336AE000C5420 /* UIColorExtensions.swift */,
 				84F308EF2AC9952C00FBE579 /* Constants.swift */,
+				84F71B682ADC044300A76482 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Halper;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				844A82AC2A99FB9E0047778E /* SceneDelegate.swift in Sources */,
 				84F308F22AC9AD9900FBE579 /* AuthViewController.swift in Sources */,
 				84F308F02AC9952C00FBE579 /* Constants.swift in Sources */,
+				84F71B692ADC044300A76482 /* UIBlockingProgressHUD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
