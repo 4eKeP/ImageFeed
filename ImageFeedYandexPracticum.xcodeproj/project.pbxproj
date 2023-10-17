@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8413BF042AD2D5F3008DC7A9 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 8413BF032AD2D5F3008DC7A9 /* ProgressHUD */; };
+		843F5CF12ADED95900D5BE50 /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F5CF02ADED95900D5BE50 /* ProfileResult.swift */; };
+		843F5CF32ADED99200D5BE50 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F5CF22ADED99200D5BE50 /* Profile.swift */; };
 		844A82AA2A99FB9E0047778E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82A92A99FB9E0047778E /* AppDelegate.swift */; };
 		844A82AC2A99FB9E0047778E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82AB2A99FB9E0047778E /* SceneDelegate.swift */; };
 		844A82AE2A99FB9E0047778E /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82AD2A99FB9E0047778E /* ImagesListViewController.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		843F5CF02ADED95900D5BE50 /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
+		843F5CF22ADED99200D5BE50 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		844A82A62A99FB9E0047778E /* ImageFeedYandexPracticum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeedYandexPracticum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		844A82A92A99FB9E0047778E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		844A82AB2A99FB9E0047778E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				8485D8882ADD7C260097FFED /* ProfileService.swift */,
+				843F5CF02ADED95900D5BE50 /* ProfileResult.swift */,
+				843F5CF22ADED99200D5BE50 /* Profile.swift */,
 			);
 			path = ProfileService;
 			sourceTree = "<group>";
@@ -256,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D9D03D2ACDC7C200BB556A /* OAuth2TokenStorage.swift in Sources */,
+				843F5CF32ADED99200D5BE50 /* Profile.swift in Sources */,
 				84F308F52AC9AEC400FBE579 /* WebViewViewController.swift in Sources */,
 				84D9D03F2ACDCB2900BB556A /* OAuth2Service.swift in Sources */,
 				84D9D0452ACDDA4A00BB556A /* AuthViewControllerDelegate.swift in Sources */,
@@ -272,6 +279,7 @@
 				844A82AC2A99FB9E0047778E /* SceneDelegate.swift in Sources */,
 				84F308F22AC9AD9900FBE579 /* AuthViewController.swift in Sources */,
 				84F308F02AC9952C00FBE579 /* Constants.swift in Sources */,
+				843F5CF12ADED95900D5BE50 /* ProfileResult.swift in Sources */,
 				84F71B692ADC044300A76482 /* UIBlockingProgressHUD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

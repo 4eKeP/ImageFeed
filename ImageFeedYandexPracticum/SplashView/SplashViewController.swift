@@ -12,10 +12,13 @@ final class SplashViewController: UIViewController {
     
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let profileService = ProfileService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if oauth2TokenStorage.token != nil {
+            fetchProfile(token: oauth2TokenStorage.token!)
             switchToTabBarViewController()
         } else {
             performSegue(withIdentifier: authenticationSegueIdentifier, sender: nil)
@@ -56,9 +59,9 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-       UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
+            UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
         }
     }
@@ -66,7 +69,8 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
+            case .success(let token):
+                fetchProfile(token: token)
                 self.switchToTabBarViewController()
                 UIBlockingProgressHUD.dismiss()
             case .failure:
@@ -76,5 +80,20 @@ extension SplashViewController: AuthViewControllerDelegate {
             }
         }
     }
+    
+    private func fetchProfile(token: String) {
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                UIBlockingProgressHUD.dismiss()
+                self.switchToTabBarViewController()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+    }
+    
+    
 }
 

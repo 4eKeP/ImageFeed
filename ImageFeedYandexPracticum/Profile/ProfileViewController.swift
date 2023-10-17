@@ -50,29 +50,22 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
-    let profileService = ProfileService()
-    let token = OAuth2TokenStorage().token
+    private let profileService = ProfileService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         addConstraints()
+        guard let profile = profileService.profile else { return }
+        updateProfile(profile: profile)
         
-        guard let token = token else { return }
-        profileService.fetchProfile(token) { result in
-            print(result)
-            switch result {
-            case .success(let profile):
-                // Обновите UI-элементы на основе полученных данных
-                DispatchQueue.main.async {
-                    self.nameLabel.text = profile.name
-                    self.loginNameLabel.text = profile.loginName
-                    self.descriptionLabel.text = profile.bio
-                }
-            case .failure(let error):
-                // Обработайте ошибку, если не удалось получить профиль
-                print("Error fetching profile: \(error.localizedDescription)")
-            }
+    }
+    
+    private func updateProfile(profile: Profile) {
+        DispatchQueue.main.async {
+            self.nameLabel.text = profile.name
+            self.loginNameLabel.text = profile.loginName
+            self.descriptionLabel.text = profile.bio
         }
     }
     
