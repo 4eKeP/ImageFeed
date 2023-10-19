@@ -15,6 +15,7 @@
 		843F9D622AE0CB74001C58F3 /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F9D612AE0CB74001C58F3 /* URLSessionExtension.swift */; };
 		843F9D652AE16BDB001C58F3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 843F9D642AE16BDB001C58F3 /* Kingfisher */; };
 		843F9D682AE1787D001C58F3 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 843F9D672AE1787D001C58F3 /* SwiftKeychainWrapper */; };
+		843F9D6B2AE17E15001C58F3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F9D6A2AE17E15001C58F3 /* TabBarController.swift */; };
 		844A82AA2A99FB9E0047778E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82A92A99FB9E0047778E /* AppDelegate.swift */; };
 		844A82AC2A99FB9E0047778E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82AB2A99FB9E0047778E /* SceneDelegate.swift */; };
 		844A82AE2A99FB9E0047778E /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82AD2A99FB9E0047778E /* ImagesListViewController.swift */; };
@@ -44,6 +45,7 @@
 		843F5CF52ADF713500D5BE50 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		843F5CF72ADF7A4500D5BE50 /* NetworkErrorChek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorChek.swift; sourceTree = "<group>"; };
 		843F9D612AE0CB74001C58F3 /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
+		843F9D6A2AE17E15001C58F3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		844A82A62A99FB9E0047778E /* ImageFeedYandexPracticum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeedYandexPracticum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		844A82A92A99FB9E0047778E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		844A82AB2A99FB9E0047778E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,14 @@
 			path = ProfileImageService;
 			sourceTree = "<group>";
 		};
+		843F9D692AE17DF0001C58F3 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				843F9D6A2AE17E15001C58F3 /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		8444D5BC2ABECBA8005BE3FB /* SingleImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +130,7 @@
 			children = (
 				844A82A92A99FB9E0047778E /* AppDelegate.swift */,
 				844A82AB2A99FB9E0047778E /* SceneDelegate.swift */,
+				843F9D692AE17DF0001C58F3 /* TabBar */,
 				84C2EFB52AC3366E000C5420 /* Halper */,
 				8485D8872ADD7BFE0097FFED /* ProfileService */,
 				843F5CF42ADF70FC00D5BE50 /* ProfileImageService */,
@@ -295,6 +306,7 @@
 				844A82AE2A99FB9E0047778E /* ImagesListViewController.swift in Sources */,
 				84C2EFB72AC336AE000C5420 /* UIColorExtensions.swift in Sources */,
 				843F9D622AE0CB74001C58F3 /* URLSessionExtension.swift in Sources */,
+				843F9D6B2AE17E15001C58F3 /* TabBarController.swift in Sources */,
 				84D9D0432ACDD45600BB556A /* SplashViewController.swift in Sources */,
 				844A82DE2A9DBC040047778E /* ImagesListCell.swift in Sources */,
 				84B39AFE2AB2B741008DD303 /* ProfileViewController.swift in Sources */,

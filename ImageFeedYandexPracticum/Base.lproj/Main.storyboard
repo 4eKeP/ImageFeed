@@ -13,7 +13,7 @@
         <!--ImageList-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeedYandexPracticum" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagesListViewController" title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeedYandexPracticum" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -280,7 +280,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="KWy-oX-DEt">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarViewController" id="Ttm-7g-E8d" customClass="TabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="Ttm-7g-E8d" customClass="TabBarController" customModule="ImageFeedYandexPracticum" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ig7-hA-cQy">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -290,35 +290,15 @@
                             <color key="backgroundColor" name="YPBlack"/>
                         </tabBarAppearance>
                     </tabBar>
-                    <connections>
-                        <segue destination="4Vv-xO-JKl" kind="relationship" relationship="viewControllers" id="Tro-Hj-Zna"/>
-                        <segue destination="Vad-VM-FeH" kind="relationship" relationship="viewControllers" id="vP6-kF-SNt"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y9x-3j-rUb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-44" y="383.49753694581284"/>
         </scene>
-        <!--Profile-->
-        <scene sceneID="je0-Y0-piU">
-            <objects>
-                <viewController title="Profile" id="Vad-VM-FeH" customClass="ProfileViewController" customModule="ImageFeedYandexPracticum" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="v6w-cL-qlh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="xgy-g1-VOn"/>
-                        <color key="backgroundColor" name="YPBlack"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="XTG-H2-Psi"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6RQ-WT-Yha" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="948" y="716.74876847290648"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="qvB-Xp-O5o">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Vv-xO-JKl" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationViewController" automaticallyAdjustsScrollViewInsets="NO" id="4Vv-xO-JKl" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="seX-NM-tZa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kem-kL-Hq1">
@@ -394,7 +374,6 @@
         <image name="nav_back_button" width="24" height="24"/>
         <image name="share_button" width="50" height="50"/>
         <image name="tab_editorial_active" width="30" height="30"/>
-        <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -13,6 +13,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var profileImageView: UIImageView = {
         var view = UIImageView()
+        view.backgroundColor = .ypBlack
         let profileImage = UIImage(named: "avatar")
         view = UIImageView(image: profileImage)
         view.layer.cornerRadius = 35
@@ -74,12 +75,14 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
+        
         profileImageView.kf.indicatorType = .activity
-        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor)])
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor), .cacheSerializer(FormatIndicatedCacheSerializer.png)])
     }
     
     private func updateProfile(profile: Profile) {
@@ -119,6 +122,7 @@ final class ProfileViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
+        view.backgroundColor = .ypBlack
     }
     
     @objc
