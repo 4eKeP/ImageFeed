@@ -13,4 +13,11 @@ struct Profile {
     let loginName: String
     var bio: String
 //    let profileImageURL: URL
+    
+    init(from body: ProfileResult) {
+        self.username = body.username
+        self.name = "\(body.firstName) \(body.lastName)"
+        self.loginName = "@\(body.username)"
+        self.bio = body.bio ?? "Тут пока что пусто"
+    }
 }

@@ -51,14 +51,31 @@ final class ProfileViewController: UIViewController {
     }()
     
     private let profileService = ProfileService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         addConstraints()
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.DidChangeNotification,
+            object: nil,
+            queue: .main)
+            { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
         guard let profile = profileService.profile else { return }
         updateProfile(profile: profile)
         
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
     }
     
     private func updateProfile(profile: Profile) {
@@ -105,5 +122,6 @@ final class ProfileViewController: UIViewController {
         print("logout pressed")
     }
 }
+
 
 
