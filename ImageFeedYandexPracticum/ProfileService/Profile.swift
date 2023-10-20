@@ -12,7 +12,6 @@ struct Profile {
     let name: String
     let loginName: String
     var bio: String
-//    let profileImageURL: URL
     
     init(from body: ProfileResult) {
         self.username = body.username

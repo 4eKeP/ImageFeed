@@ -62,10 +62,10 @@ final class ProfileViewController: UIViewController {
             forName: ProfileImageService.DidChangeNotification,
             object: nil,
             queue: .main)
-            { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
+        { [weak self] _ in
+            guard let self = self else { return }
+            self.updateAvatar()
+        }
         updateAvatar()
         guard let profile = profileService.profile else { return }
         updateProfile(profile: profile)
@@ -74,12 +74,14 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
         profileImageView.kf.indicatorType = .activity
-        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor)])
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),
+                                                                                                      .cacheSerializer(FormatIndicatedCacheSerializer.png)])
     }
     
     private func updateProfile(profile: Profile) {

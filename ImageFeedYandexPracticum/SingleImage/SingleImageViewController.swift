@@ -17,7 +17,6 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet private var imageView: UIImageView!
     
