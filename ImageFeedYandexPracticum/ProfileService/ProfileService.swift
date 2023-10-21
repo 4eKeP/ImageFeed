@@ -48,7 +48,7 @@ extension ProfileService {
     private func profileRequest(token: String) -> URLRequest {
         URLRequest.makeProfileHTTPRequest(path: "/me",
                                           httpMethod: "GET",
-                                          baseURL: URL(string: "https://api.unsplash.com")!,
+                                          baseURL: Constants.defaultBaseURL!,
                                           token: "Bearer \(token)",
                                           headerField: "Authorization"
         )

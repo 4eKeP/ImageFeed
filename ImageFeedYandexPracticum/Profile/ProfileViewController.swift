@@ -13,7 +13,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var profileImageView: UIImageView = {
         var view = UIImageView()
-        let profileImage = UIImage(named: "avatar")
+        let profileImage = UIImage(named: "placeholder")
         view = UIImageView(image: profileImage)
         view.layer.cornerRadius = 35
         return view
@@ -21,7 +21,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var nameLabel: UILabel = {
         var label = UILabel()
-        label.text = "Екатерина Новикова"
+        label.text = ""
         label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         return label
@@ -29,7 +29,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var loginNameLabel: UILabel = {
         var label = UILabel()
-        label.text = "@ekaterina_nov"
+        label.text = ""
         label.textColor = UIColor.ypGray
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
@@ -37,7 +37,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel()
-        label.text = "Hello, World!"
+        label.text = ""
         label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
@@ -59,7 +59,7 @@ final class ProfileViewController: UIViewController {
         setupViews()
         addConstraints()
         profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.DidChangeNotification,
+            forName: ProfileImageService.didChangeNotification,
             object: nil,
             queue: .main)
         { [weak self] _ in

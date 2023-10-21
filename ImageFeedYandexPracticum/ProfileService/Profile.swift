@@ -17,6 +17,6 @@ struct Profile {
         self.username = body.username
         self.name = "\(body.firstName) \(body.lastName)"
         self.loginName = "@\(body.username)"
-        self.bio = body.bio ?? "Тут пока что пусто"
+        self.bio = body.bio ?? ""
     }
 }

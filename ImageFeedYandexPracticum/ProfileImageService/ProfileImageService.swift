@@ -22,14 +22,15 @@ final class ProfileImageService {
         
         let request = profileRequest(token: token, username: username)
         
-        let task = urlSession.objectTask(for: request) { (result: Result<UserResult, Error>) in
+        let task = urlSession.objectTask(for: request) { [ weak self ] (result: Result<UserResult, Error>) in
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 switch result {
                 case .success(let body):
                     guard let profileImageURL = body.profile_image.small else { return }
                     self.avatarURL = profileImageURL
                     completion(.success(profileImageURL))
-                    NotificationCenter.default.post(name: ProfileImageService.DidChangeNotification,
+                    NotificationCenter.default.post(name: ProfileImageService.didChangeNotification,
                                                     object: self,
                                                     userInfo: ["URL" : profileImageURL])
                     
@@ -57,7 +58,7 @@ extension ProfileImageService {
     private func profileRequest(token: String, username: String) -> URLRequest {
         URLRequest.makeProfileHTTPRequest(path: "/users/\(username)",
                                           httpMethod: "GET",
-                                          baseURL: URL(string: "https://api.unsplash.com")!,
+                                          baseURL: Constants.defaultBaseURL!,
                                           token: "Bearer \(token)",
                                           headerField: "Authorization"
         )
@@ -65,7 +66,7 @@ extension ProfileImageService {
 }
 
 extension ProfileImageService {
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
 }
 
 
