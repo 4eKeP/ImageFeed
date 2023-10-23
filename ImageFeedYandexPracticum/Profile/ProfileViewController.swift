@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 
 final class ProfileViewController: UIViewController {
     
     private lazy var profileImageView: UIImageView = {
         var view = UIImageView()
-        let profileImage = UIImage(named: "avatar")
+        let profileImage = UIImage(named: "placeholder")
         view = UIImageView(image: profileImage)
         view.layer.cornerRadius = 35
         return view
@@ -20,7 +21,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var nameLabel: UILabel = {
         var label = UILabel()
-        label.text = "Екатерина Новикова"
+        label.text = ""
         label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         return label
@@ -28,7 +29,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var loginNameLabel: UILabel = {
         var label = UILabel()
-        label.text = "@ekaterina_nov"
+        label.text = ""
         label.textColor = UIColor.ypGray
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
@@ -36,7 +37,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel()
-        label.text = "Hello, World!"
+        label.text = ""
         label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
@@ -50,10 +51,45 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
+    private let profileService = ProfileService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         addConstraints()
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main)
+        { [weak self] _ in
+            guard let self = self else { return }
+            self.updateAvatar()
+        }
+        updateAvatar()
+        guard let profile = profileService.profile else { return }
+        updateProfile(profile: profile)
+        
+    }
+    
+    private func updateAvatar() {
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        profileImageView.kf.indicatorType = .activity
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),
+                                                                                                      .cacheSerializer(FormatIndicatedCacheSerializer.png)])
+    }
+    
+    private func updateProfile(profile: Profile) {
+        DispatchQueue.main.async {
+            self.nameLabel.text = profile.name
+            self.loginNameLabel.text = profile.loginName
+            self.descriptionLabel.text = profile.bio
+        }
     }
     
     private func addConstraints() {
@@ -92,5 +128,6 @@ final class ProfileViewController: UIViewController {
         print("logout pressed")
     }
 }
+
 
 
