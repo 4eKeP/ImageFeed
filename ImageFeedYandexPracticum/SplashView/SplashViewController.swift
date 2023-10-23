@@ -27,7 +27,7 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if oauth2TokenStorage.token != nil {
-            guard let token = oauth2TokenStorage.token else { return }
+            let token = oauth2TokenStorage.token!
             fetchProfile(token: token)
         } else {
             switchToAuthViewController()
@@ -95,9 +95,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success(let token):
                 fetchProfile(token: token)
-    //            UIBlockingProgressHUD.dismiss()
             case .failure:
-    //            UIBlockingProgressHUD.dismiss()
                 showErrorAlert(message: "Не удалось войти в систему")
                 break
             }
@@ -112,10 +110,8 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 guard let username = profileService.profile?.username else { return }
                 fetchProfileImage(username: username, token: token)
-         //       UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarViewController()
             case .failure:
-           //     UIBlockingProgressHUD.dismiss()
                 showErrorAlert(message: "Не удалось получить данные профиля")
             }
             UIBlockingProgressHUD.dismiss()
