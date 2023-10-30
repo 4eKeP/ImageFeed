@@ -55,19 +55,5 @@ extension ProfileService {
     }
 }
 
-extension URLRequest {
-    static func makeProfileHTTPRequest(
-        path: String,
-        httpMethod: String,
-        baseURL: URL = Constants.defaultBaseURL!,
-        token: String,
-        headerField: String
-    ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
-        request.httpMethod = httpMethod
-        request.setValue(token, forHTTPHeaderField: headerField)
-        return request
-    }
-}
 
 

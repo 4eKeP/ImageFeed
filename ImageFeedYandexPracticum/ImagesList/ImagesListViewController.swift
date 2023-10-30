@@ -12,6 +12,10 @@ class ImagesListViewController: UIViewController {
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let imagesListService = ImagesListService.shared
+    
+    var photos: [Photo] = []
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,8 +46,11 @@ class ImagesListViewController: UIViewController {
 }
 
 extension ImagesListViewController: UITableViewDataSource {
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        photosName.count
+        photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,6 +64,8 @@ extension ImagesListViewController: UITableViewDataSource {
         
         return imagesListCell
     }
+    
+    
 }
 
 extension ImagesListViewController: UITableViewDelegate {
@@ -75,6 +84,13 @@ extension ImagesListViewController: UITableViewDelegate {
         let scale = imageViewWidth / imageWidth
         let cellHeight = image.size.height * scale + imageInsert.top + imageInsert.bottom
         return cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let token = oauth2TokenStorage.token else { return }
+        if indexPath.row + 1 == photosName.count {
+            imagesListService.fetchPhotosNextPage(token: token) { _ in }
+        }
     }
 }
 

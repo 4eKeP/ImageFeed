@@ -94,6 +94,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success(let token):
+                
                 fetchProfile(token: token)
             case .failure:
                 showErrorAlert(message: "Не удалось войти в систему")
