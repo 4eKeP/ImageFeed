@@ -40,6 +40,7 @@ final class ProfileViewController: UIViewController {
         label.text = ""
         label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -80,8 +81,7 @@ final class ProfileViewController: UIViewController {
             let url = URL(string: profileImageURL)
         else { return }
         profileImageView.kf.indicatorType = .activity
-        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),
-                                                                                                      .cacheSerializer(FormatIndicatedCacheSerializer.png)])
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
     }
     
     private func updateProfile(profile: Profile) {

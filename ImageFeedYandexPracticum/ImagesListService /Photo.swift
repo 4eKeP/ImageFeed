@@ -23,7 +23,7 @@ struct Photo {
         self.size = CGSize(width: body.width, height: body.height)
         self.createdAt = makeDate(body: body)
         self.welcomeDescription = body.description
-        self.thumbImageURL = body.urls.thumb
+        self.thumbImageURL = body.urls.small
         self.largeImageURL = body.urls.raw
         self.isLiked = body.likedByUser
         

@@ -9,6 +9,14 @@ import UIKit
 
 final class SingleImageViewController: UIViewController {
     
+//    var imageUrl: URL! {
+//        didSet {
+//            guard isViewLoaded else {return}
+//            imageView.kf.setImage(with: imageUrl)
+//            rescaleAndCenterImageInScrollView(image: image)
+//        }
+//    }
+    
     var image: UIImage! {
         didSet {
             guard isViewLoaded else {return}

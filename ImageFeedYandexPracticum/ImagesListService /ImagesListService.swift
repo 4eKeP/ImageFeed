@@ -37,6 +37,7 @@ final class ImagesListService {
                 guard let self = self else { return }
                 switch result {
                 case .success(let body):
+                    self.lastLoadedPage = nextPage
                     let photosFromResponce = body
                     var decodedPhotos: [Photo] = []
                     photosFromResponce.forEach { photo in

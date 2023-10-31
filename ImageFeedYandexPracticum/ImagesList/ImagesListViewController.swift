@@ -10,7 +10,6 @@ import UIKit
 class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let imagesListService = ImagesListService.shared
@@ -35,6 +34,11 @@ class ImagesListViewController: UIViewController {
         tableView.delegate = self
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        guard let token = oauth2TokenStorage.token else { return }
+        imagesListService.fetchPhotosNextPage(token: token) { [weak self] _ in
+            guard let self = self else {return}
+            self.updateTableViewAnimated()
+        }
     }
     
     private lazy var dateFormatter: DateFormatter = {
@@ -76,31 +80,53 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else { return 0 }
-        
-        let imageInsert = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsert.left - imageInsert.right
-        let imageWidth = image.size.width
-        let scale = imageViewWidth / imageWidth
-        let cellHeight = image.size.height * scale + imageInsert.top + imageInsert.bottom
-        return cellHeight
+        if indexPath.section == 0 {
+                return UITableView.automaticDimension
+            } else {
+                return 40
+            }
+//        guard let image = UIImage(named: "image_cell_placeholder") else { return 0 }
+//        
+//        let imageInsert = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+//        let imageViewWidth = tableView.bounds.width - imageInsert.left - imageInsert.right
+//        let imageWidth = image.size.width
+//        let scale = imageViewWidth / imageWidth
+//        let cellHeight = image.size.height * scale + imageInsert.top + imageInsert.bottom
+//        return cellHeight
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let token = oauth2TokenStorage.token else { return }
-        if indexPath.row + 1 == photosName.count {
-            imagesListService.fetchPhotosNextPage(token: token) { _ in }
+        if indexPath.row + 1 == photos.count {
+            imagesListService.fetchPhotosNextPage(token: token) { [ weak self ] _ in
+                guard let self = self else { return }
+                self.updateTableViewAnimated()
+            }
         }
     }
 }
+// сделать изменение размера ячейки
 
 extension ImagesListViewController {
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         
-        guard let image = UIImage(named: photosName[indexPath.row]) else { return }
+        let imageUrl = photos[indexPath.row].thumbImageURL
         
-        cell.cellImage.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
+        let url = URL(string: imageUrl)
+        
+        let placeholder = UIImage(named: "image_cell_placeholder")
+        
+        cell.cellImage.kf.indicatorType = .activity
+        
+        cell.cellImage.kf.setImage(with: url, placeholder: placeholder) { [weak self] _ in
+            guard let self = self else { return }
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            cell.cellImage.kf.indicatorType = .none
+            
+        }
+        
+        guard let date = photos[indexPath.row].createdAt else { return }
+        cell.dateLabel.text = dateFormatter.string(from: date)
         
         let isLiked = indexPath.row % 2 == 0
         
@@ -108,6 +134,7 @@ extension ImagesListViewController {
         
         cell.likeButton.setImage(likeImage, for: .normal)
     }
+    
 }
 
 extension ImagesListViewController {
@@ -115,10 +142,26 @@ extension ImagesListViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
+            let image = UIImage(named: "image_cell_placeholder")
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
+        }
+    }
+}
+
+extension ImagesListViewController {
+    func updateTableViewAnimated() {
+        let oldCount = photos.count
+        let newCount = imagesListService.photos.count
+        photos = imagesListService.photos
+        if oldCount != newCount {
+            tableView.performBatchUpdates {
+                let indexPaths = (oldCount..<newCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
         }
     }
 }
