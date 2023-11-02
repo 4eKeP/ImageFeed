@@ -7,6 +7,8 @@
 
 import UIKit
 import Kingfisher
+import WebKit
+import SwiftKeychainWrapper
 
 
 final class ProfileViewController: UIViewController {
@@ -125,7 +127,22 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func logoutButtonDidPressed() {
-        print("logout pressed")
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(
+            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
+        ) { records in
+           records.forEach { record in
+              WKWebsiteDataStore.default().removeData(
+                ofTypes: record.dataTypes,
+                for: [record],
+                completionHandler: {}
+              )
+           }
+        }
+        KeychainWrapper.standard.removeObject(forKey: "Auth token")
+        guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
+        window.rootViewController = SplashViewController()
+        window.makeKeyAndVisible()
     }
 }
 
