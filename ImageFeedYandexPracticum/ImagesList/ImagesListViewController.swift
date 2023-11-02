@@ -68,8 +68,6 @@ extension ImagesListViewController: UITableViewDataSource {
         
         return imagesListCell
     }
-    
-    
 }
 
 extension ImagesListViewController: UITableViewDelegate {
@@ -80,19 +78,14 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-                return UITableView.automaticDimension
-            } else {
-                return 40
-            }
-//        guard let image = UIImage(named: "image_cell_placeholder") else { return 0 }
-//        
-//        let imageInsert = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-//        let imageViewWidth = tableView.bounds.width - imageInsert.left - imageInsert.right
-//        let imageWidth = image.size.width
-//        let scale = imageViewWidth / imageWidth
-//        let cellHeight = image.size.height * scale + imageInsert.top + imageInsert.bottom
-//        return cellHeight
+        
+        let imageInsert = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        let imageViewWidth = tableView.bounds.width - imageInsert.left - imageInsert.right
+        let imageWidth = photos[indexPath.row].size.width
+        let scale = imageViewWidth / imageWidth
+        let cellHeight = photos[indexPath.row].size.height * scale + imageInsert.top + imageInsert.bottom
+        return cellHeight
+
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -109,6 +102,8 @@ extension ImagesListViewController: UITableViewDelegate {
 
 extension ImagesListViewController {
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
+        
+        cell.delegate = self
         
         let imageUrl = photos[indexPath.row].thumbImageURL
         
@@ -128,7 +123,7 @@ extension ImagesListViewController {
         guard let date = photos[indexPath.row].createdAt else { return }
         cell.dateLabel.text = dateFormatter.string(from: date)
         
-        let isLiked = indexPath.row % 2 == 0
+        let isLiked = photos[indexPath.row].isLiked
         
         let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No_Active")
         
@@ -142,8 +137,8 @@ extension ImagesListViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: "image_cell_placeholder")
-            viewController.image = image
+            guard let imageUrl = URL(string:photos[indexPath.row].largeImageURL) else { return }
+            viewController.imageUrl = imageUrl
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -163,5 +158,37 @@ extension ImagesListViewController {
                 tableView.insertRows(at: indexPaths, with: .automatic)
             } completion: { _ in }
         }
+    }
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return print("не удалось получить индекс ячейки") }
+        let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id,
+                                     token: oauth2TokenStorage.token!,
+                                     isLike: photo.isLiked) { [ weak self ] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                self.photos = self.imagesListService.photos
+                cell.setIsLiked(self.photos[indexPath.row].isLiked)
+                UIBlockingProgressHUD.dismiss()
+            case .failure(let error):
+                UIBlockingProgressHUD.dismiss()
+                errorLikeAlert(error: error)
+            }
+               
+        }
+    }
+    
+    private func errorLikeAlert(error: Error) {
+        let alert = UIAlertController(
+                    title: "Что-то пошло не так",
+                    message: "Не удалось поставить лайк",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+                self.present(alert, animated: true, completion: nil)
     }
 }

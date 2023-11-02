@@ -74,5 +74,43 @@ extension ImagesListService {
     static let didChangeNotification = Notification.Name("ImagesListServiceDidChange")
 }
 
+//like handling
+
+extension ImagesListService {
+    func changeLike(photoId: String, token: String, isLike: Bool, _ completion: @escaping (Result<LikeResult, Error>) -> Void) {
+        let request = likeRequest(token: token, photoId: photoId, isLike: isLike)
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                    let photo = self.photos[index]
+                    DispatchQueue.main.async {
+                        let newPhoto = Photo(id: photo.id,
+                                             size: photo.size,
+                                             createdAt: photo.createdAt,
+                                             welcomeDescription: photo.welcomeDescription,
+                                             thumbImageURL: photo.thumbImageURL,
+                                             largeImageURL: photo.largeImageURL,
+                                             isLiked: !photo.isLiked)
+                        self.photos = self.photos.withReplaced(itemAt: index, newValue: newPhoto)
+                        completion(result)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    private func likeRequest(token: String, photoId: String, isLike: Bool) -> URLRequest {
+        URLRequest.makeImageListHTTPRequest(path: "/photos/\(photoId)/like",
+                                            httpMethod: !isLike ? "POST" : "DELETE",
+                                            token: token,
+                                            headerField: "Authorization")
+    }
+}
 
 

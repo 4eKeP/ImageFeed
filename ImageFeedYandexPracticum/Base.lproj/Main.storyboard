@@ -47,9 +47,12 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GIj-bh-HiF" userLabel="Like Button">
                                                     <rect key="frame" x="315" y="4" width="44" height="44"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="No Active">
+                                                    <state key="normal" image="No_Active">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="likeButtonPressed:" destination="Olb-9x-aNK" eventType="touchUpInside" id="0AB-j4-GpT"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -338,7 +341,7 @@
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="Backward" width="24" height="24"/>
-        <image name="No Active" width="44" height="44"/>
+        <image name="No_Active" width="44" height="44"/>
         <image name="logo_of_Unsplash" width="60" height="60"/>
         <image name="nav_back_button" width="24" height="24"/>
         <image name="share_button" width="50" height="50"/>

@@ -28,7 +28,7 @@ extension URLRequest {
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod
-        request.setValue(token, forHTTPHeaderField: headerField)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: headerField)
         return request
     }
     
@@ -41,7 +41,7 @@ extension URLRequest {
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod
-        request.setValue(token, forHTTPHeaderField: headerField)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: headerField)
         return request
     }
 }
