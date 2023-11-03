@@ -127,22 +127,34 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func logoutButtonDidPressed() {
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        WKWebsiteDataStore.default().fetchDataRecords(
-            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
-        ) { records in
-           records.forEach { record in
-              WKWebsiteDataStore.default().removeData(
-                ofTypes: record.dataTypes,
-                for: [record],
-                completionHandler: {}
-              )
-           }
-        }
-        KeychainWrapper.standard.removeObject(forKey: "Auth token")
-        guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
-        window.rootViewController = SplashViewController()
-        window.makeKeyAndVisible()
+        logoutAlert()
+    }
+    
+    private func logoutAlert() {
+        let alert = UIAlertController(
+                    title: "Пока, пока!",
+                    message: "Уверены что хотите выйти",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Да", style: .default) { _ in
+            HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+            WKWebsiteDataStore.default().fetchDataRecords(
+                ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
+            ) { records in
+               records.forEach { record in
+                  WKWebsiteDataStore.default().removeData(
+                    ofTypes: record.dataTypes,
+                    for: [record],
+                    completionHandler: {}
+                  )
+               }
+            }
+            KeychainWrapper.standard.removeObject(forKey: "Auth token")
+            guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
+            window.rootViewController = SplashViewController()
+            window.makeKeyAndVisible()
+        })
+                self.present(alert, animated: true, completion: nil)
     }
 }
 
