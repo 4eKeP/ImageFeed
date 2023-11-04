@@ -54,7 +54,6 @@ final class ImagesListService {
                 self.task = nil
             }
         }
-        self.task = task
         task.resume()
     }
 }
