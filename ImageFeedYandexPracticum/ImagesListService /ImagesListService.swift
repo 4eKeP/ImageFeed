@@ -17,16 +17,16 @@ final class ImagesListService {
     private var task: URLSessionTask?
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
     
-    func fetchPhotosNextPage(
-        token: String,
-        completion: @escaping (Result<[Photo], Error>) -> Void) {
+    func fetchPhotosNextPage() {
+            
         assert(Thread.isMainThread)
-        if task != nil {
-            task?.cancel()
-        }
+        if task != nil { return }
         
-        let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
+        let nextPage = (lastLoadedPage ?? 0) + 1
+        
+        guard let token = oauth2TokenStorage.token else { return }
         
         let request = ImageListRequest(
             token: token,
@@ -41,19 +41,20 @@ final class ImagesListService {
                     let photosFromResponce = body
                     var decodedPhotos: [Photo] = []
                     photosFromResponce.forEach { photo in
-                        decodedPhotos.append(Photo(from: photo))
+                        decodedPhotos.append(photo.asDomain())
                     }
+                    print(photosFromResponce)
                     self.photos.append(contentsOf: decodedPhotos)
-                    completion(.success(decodedPhotos))
                     NotificationCenter.default.post(name: ImagesListService.didChangeNotification,
                                                     object: self,
                                                     userInfo: ["Photos" : decodedPhotos])
                 case .failure(let error):
-                    print("Не удалось получить данные из запроса")
-                    completion(.failure(error))
+                    print("Не удалось получить данные из запроса \(error)")
                 }
+                self.task = nil
             }
         }
+        self.task = task
         task.resume()
     }
 }

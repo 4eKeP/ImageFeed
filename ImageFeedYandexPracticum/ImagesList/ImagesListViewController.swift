@@ -11,8 +11,9 @@ class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
     private let imagesListService = ImagesListService.shared
+    private var imagesListObserver: NSObjectProtocol?
     
     var photos: [Photo] = []
     
@@ -34,11 +35,14 @@ class ImagesListViewController: UIViewController {
         tableView.delegate = self
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        guard let token = oauth2TokenStorage.token else { return }
-        imagesListService.fetchPhotosNextPage(token: token) { [weak self] _ in
-            guard let self = self else {return}
-            self.updateTableViewAnimated()
-        }
+        
+        startObserveImagesListChanges()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopObserveImagesListChanges()
     }
     
     private lazy var dateFormatter: DateFormatter = {
@@ -89,12 +93,8 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let token = oauth2TokenStorage.token else { return }
         if indexPath.row + 1 == photos.count {
-            imagesListService.fetchPhotosNextPage(token: token) { [ weak self ] _ in
-                guard let self = self else { return }
-                self.updateTableViewAnimated()
-            }
+            imagesListService.fetchPhotosNextPage()
         }
     }
 }
@@ -107,13 +107,11 @@ extension ImagesListViewController {
         
         let imageUrl = photos[indexPath.row].thumbImageURL
         
-        let url = URL(string: imageUrl)
-        
         let placeholder = UIImage(named: "image_cell_placeholder")
         
         cell.cellImage.kf.indicatorType = .activity
         
-        cell.cellImage.kf.setImage(with: url, placeholder: placeholder) { [weak self] _ in
+        cell.cellImage.kf.setImage(with: imageUrl, placeholder: placeholder) { [weak self] _ in
             guard let self = self else { return }
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
             cell.cellImage.kf.indicatorType = .none
@@ -137,7 +135,7 @@ extension ImagesListViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            guard let imageUrl = URL(string:photos[indexPath.row].largeImageURL) else { return }
+            let imageUrl = photos[indexPath.row].largeImageURL
             viewController.imageUrl = imageUrl
         } else {
             super.prepare(for: segue, sender: sender)
@@ -190,5 +188,17 @@ extension ImagesListViewController: ImagesListCellDelegate {
                     preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel))
                 self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension ImagesListViewController {
+    private func startObserveImagesListChanges() {
+        imagesListObserver = NotificationCenter.default.addObserver(forName: ImagesListService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateTableViewAnimated()
+        }
+        imagesListService.fetchPhotosNextPage()
+    }
+    private func stopObserveImagesListChanges() {
+        NotificationCenter.default.removeObserver(self, name: ImagesListService.didChangeNotification, object: nil)
     }
 }

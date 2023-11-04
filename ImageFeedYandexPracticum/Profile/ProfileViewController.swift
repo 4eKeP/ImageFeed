@@ -56,6 +56,7 @@ final class ProfileViewController: UIViewController {
     
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,29 +133,34 @@ final class ProfileViewController: UIViewController {
     
     private func logoutAlert() {
         let alert = UIAlertController(
-                    title: "Пока, пока!",
-                    message: "Уверены что хотите выйти",
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Да", style: .default) { _ in
-            HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-            WKWebsiteDataStore.default().fetchDataRecords(
-                ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
-            ) { records in
-               records.forEach { record in
-                  WKWebsiteDataStore.default().removeData(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            guard let self = self else {return}
+            self.cleanTokenDataAndResetToAuth()
+        })
+                self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func cleanTokenDataAndResetToAuth() {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(
+            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
+        ) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(
                     ofTypes: record.dataTypes,
                     for: [record],
                     completionHandler: {}
-                  )
-               }
+                )
             }
-            KeychainWrapper.standard.removeObject(forKey: "Auth token")
-            guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
-            window.rootViewController = SplashViewController()
-            window.makeKeyAndVisible()
-        })
-                self.present(alert, animated: true, completion: nil)
+        }
+        OAuth2TokenStorage.deleteToken()
+        guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
+        window.rootViewController = SplashViewController()
+        window.makeKeyAndVisible()
     }
 }
 
