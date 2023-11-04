@@ -18,7 +18,7 @@ final class AuthViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        .darkContent
+        .lightContent
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

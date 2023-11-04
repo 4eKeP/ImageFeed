@@ -32,7 +32,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        .darkContent
+        .lightContent
     }
     
     @IBAction func tabBackButtonPressed(_ sender: Any) {

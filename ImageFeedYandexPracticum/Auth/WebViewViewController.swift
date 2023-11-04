@@ -35,7 +35,7 @@ final class WebViewViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        .darkContent
+        .lightContent
     }
     
     private func updateProgress() {

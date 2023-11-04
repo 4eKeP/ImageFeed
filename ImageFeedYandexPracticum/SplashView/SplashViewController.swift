@@ -48,7 +48,7 @@ final class SplashViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        .darkContent
+        .lightContent
     }
     private func switchToTabBarViewController() {
         let scenes = UIApplication.shared.connectedScenes
