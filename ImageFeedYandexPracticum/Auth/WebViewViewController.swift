@@ -28,6 +28,15 @@ final class WebViewViewController: UIViewController {
         loadWebView()
         
     }
+     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
     
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)

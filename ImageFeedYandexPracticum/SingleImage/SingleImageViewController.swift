@@ -9,11 +9,10 @@ import UIKit
 
 final class SingleImageViewController: UIViewController {
     
-    var image: UIImage! {
+    var imageUrl: URL! {
         didSet {
             guard isViewLoaded else {return}
-            imageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
+            setSingleImage()
         }
     }
     
@@ -24,15 +23,23 @@ final class SingleImageViewController: UIViewController {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
-        
+        setSingleImage()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     @IBAction func tabBackButtonPressed(_ sender: Any) {
         dismiss(animated: true)
     }
     @IBAction func shareButtonDidPressed(_ sender: Any) {
-        guard let image = image else { return }
+        guard let image = imageUrl else { return }
         let share = UIActivityViewController(
             activityItems: [image],
             applicationActivities: nil
@@ -54,6 +61,36 @@ final class SingleImageViewController: UIViewController {
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+    }
+    
+    func setSingleImage() {
+        UIBlockingProgressHUD.show()
+        setImageFromUrl()
+    }
+    private func setImageFromUrl() {
+        imageView.kf.setImage(with: imageUrl) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self = self else { return }
+            switch result {
+            case .success(let imageResult):
+                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+            case .failure:
+                self.showImageError(imageUrl: imageUrl)
+            }
+        }
+    }
+    
+    private func showImageError(imageUrl: URL) {
+        let alert = UIAlertController(
+                    title: "Что-то пошло не так",
+                    message: "Не удалось поставить лайк",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.setImageFromUrl()
+        }))
+                self.present(alert, animated: true, completion: nil)
     }
 }
 

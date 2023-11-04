@@ -7,6 +7,8 @@
 
 import UIKit
 import Kingfisher
+import WebKit
+import SwiftKeychainWrapper
 
 
 final class ProfileViewController: UIViewController {
@@ -40,6 +42,7 @@ final class ProfileViewController: UIViewController {
         label.text = ""
         label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -53,6 +56,7 @@ final class ProfileViewController: UIViewController {
     
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +76,15 @@ final class ProfileViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     private func updateAvatar() {
         let processor = RoundCornerImageProcessor(cornerRadius: 35)
         
@@ -80,8 +93,7 @@ final class ProfileViewController: UIViewController {
             let url = URL(string: profileImageURL)
         else { return }
         profileImageView.kf.indicatorType = .activity
-        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),
-                                                                                                      .cacheSerializer(FormatIndicatedCacheSerializer.png)])
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
     }
     
     private func updateProfile(profile: Profile) {
@@ -125,7 +137,39 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func logoutButtonDidPressed() {
-        print("logout pressed")
+        logoutAlert()
+    }
+    
+    private func logoutAlert() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            guard let self = self else {return}
+            self.cleanTokenDataAndResetToAuth()
+        })
+                self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func cleanTokenDataAndResetToAuth() {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(
+            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
+        ) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(
+                    ofTypes: record.dataTypes,
+                    for: [record],
+                    completionHandler: {}
+                )
+            }
+        }
+        OAuth2TokenStorage.deleteToken()
+        guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
+        window.rootViewController = SplashViewController()
+        window.makeKeyAndVisible()
     }
 }
 

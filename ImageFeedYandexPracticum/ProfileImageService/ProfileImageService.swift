@@ -27,7 +27,7 @@ final class ProfileImageService {
                 guard let self = self else { return }
                 switch result {
                 case .success(let body):
-                    guard let profileImageURL = body.profile_image.small else { return }
+                    guard let profileImageURL = body.profileImage.small else { return }
                     self.avatarURL = profileImageURL
                     completion(.success(profileImageURL))
                     NotificationCenter.default.post(name: ProfileImageService.didChangeNotification,
@@ -41,15 +41,6 @@ final class ProfileImageService {
             }
         }
         task.resume()
-    }
-    
-    
-    struct UserResult: Codable {
-        let profile_image: ProfileURL
-    }
-    
-    struct ProfileURL: Codable {
-        let small: String?
     }
 }
 
