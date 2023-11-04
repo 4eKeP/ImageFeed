@@ -76,6 +76,15 @@ final class ProfileViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .darkContent
+    }
+    
     private func updateAvatar() {
         let processor = RoundCornerImageProcessor(cornerRadius: 35)
         

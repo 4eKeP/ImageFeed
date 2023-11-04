@@ -25,6 +25,16 @@ final class SingleImageViewController: UIViewController {
         scrollView.maximumZoomScale = 1.25
         setSingleImage()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .darkContent
+    }
+    
     @IBAction func tabBackButtonPressed(_ sender: Any) {
         dismiss(animated: true)
     }

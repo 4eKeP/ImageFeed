@@ -24,7 +24,7 @@ class ImagesListViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
+        .darkContent
     }
     
     override func viewDidLoad() {
