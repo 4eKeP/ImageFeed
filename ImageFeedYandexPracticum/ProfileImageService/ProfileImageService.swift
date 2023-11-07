@@ -49,7 +49,7 @@ extension ProfileImageService {
     private func profileRequest(token: String, username: String) -> URLRequest {
         URLRequest.makeProfileHTTPRequest(path: "/users/\(username)",
                                           httpMethod: "GET",
-                                          baseURL: Constants.defaultBaseURL!,
+                                          baseURL: AuthConfiguration.standard.defaultBaseURL,
                                           token: "Bearer \(token)",
                                           headerField: "Authorization"
         )

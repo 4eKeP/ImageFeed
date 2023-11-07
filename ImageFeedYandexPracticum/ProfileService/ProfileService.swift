@@ -48,7 +48,7 @@ extension ProfileService {
     private func profileRequest(token: String) -> URLRequest {
         URLRequest.makeProfileHTTPRequest(path: "/me",
                                           httpMethod: "GET",
-                                          baseURL: Constants.defaultBaseURL!,
+                                          baseURL: AuthConfiguration.standard.defaultBaseURL,
                                           token: "Bearer \(token)",
                                           headerField: "Authorization"
         )
