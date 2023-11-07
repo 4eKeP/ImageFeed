@@ -24,6 +24,7 @@
 		844A82DE2A9DBC040047778E /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A82DD2A9DBC040047778E /* ImagesListCell.swift */; };
 		8477FF682AFA843500DCE4FA /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477FF672AFA843500DCE4FA /* WebViewPresenter.swift */; };
 		8477FF6A2AFA997000DCE4FA /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477FF692AFA997000DCE4FA /* AuthHelper.swift */; };
+		8477FF722AFA9ECA00DCE4FA /* WebViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477FF712AFA9ECA00DCE4FA /* WebViewTests.swift */; };
 		8485D8892ADD7C260097FFED /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8485D8882ADD7C260097FFED /* ProfileService.swift */; };
 		84B39AFE2AB2B741008DD303 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B39AFD2AB2B741008DD303 /* ProfileViewController.swift */; };
 		84B3C6842ACF09EE00D5EC94 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B3C6832ACF09EE00D5EC94 /* NetworkError.swift */; };
@@ -48,6 +49,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8477FF732AFA9ECA00DCE4FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844A829E2A99FB9E0047778E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844A82A52A99FB9E0047778E;
+			remoteInfo = ImageFeedYandexPracticum;
+		};
 		84C0EFA92AED2C12002357DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 844A829E2A99FB9E0047778E /* Project object */;
@@ -74,6 +82,8 @@
 		844A82DD2A9DBC040047778E /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		8477FF672AFA843500DCE4FA /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		8477FF692AFA997000DCE4FA /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
+		8477FF6F2AFA9ECA00DCE4FA /* ImageFeedYandexPracticumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedYandexPracticumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8477FF712AFA9ECA00DCE4FA /* WebViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTests.swift; sourceTree = "<group>"; };
 		8485D8882ADD7C260097FFED /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		84B39AFD2AB2B741008DD303 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		84B3C6832ACF09EE00D5EC94 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -109,6 +119,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8477FF6C2AFA9ECA00DCE4FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84C0EFA22AED2C12002357DE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				844A82A82A99FB9E0047778E /* ImageFeedYandexPracticum */,
+				8477FF702AFA9ECA00DCE4FA /* ImageFeedYandexPracticumTests */,
 				844A82A72A99FB9E0047778E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -149,6 +167,7 @@
 			children = (
 				844A82A62A99FB9E0047778E /* ImageFeedYandexPracticum.app */,
 				84C0EFA52AED2C12002357DE /* TestsImageFeedYandexPracticum.xctest */,
+				8477FF6F2AFA9ECA00DCE4FA /* ImageFeedYandexPracticumTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,6 +202,14 @@
 				844A82DD2A9DBC040047778E /* ImagesListCell.swift */,
 			);
 			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		8477FF702AFA9ECA00DCE4FA /* ImageFeedYandexPracticumTests */ = {
+			isa = PBXGroup;
+			children = (
+				8477FF712AFA9ECA00DCE4FA /* WebViewTests.swift */,
+			);
+			path = ImageFeedYandexPracticumTests;
 			sourceTree = "<group>";
 		};
 		8485D8872ADD7BFE0097FFED /* ProfileService */ = {
@@ -284,6 +311,24 @@
 			productReference = 844A82A62A99FB9E0047778E /* ImageFeedYandexPracticum.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8477FF6E2AFA9ECA00DCE4FA /* ImageFeedYandexPracticumTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8477FF752AFA9ECA00DCE4FA /* Build configuration list for PBXNativeTarget "ImageFeedYandexPracticumTests" */;
+			buildPhases = (
+				8477FF6B2AFA9ECA00DCE4FA /* Sources */,
+				8477FF6C2AFA9ECA00DCE4FA /* Frameworks */,
+				8477FF6D2AFA9ECA00DCE4FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8477FF742AFA9ECA00DCE4FA /* PBXTargetDependency */,
+			);
+			name = ImageFeedYandexPracticumTests;
+			productName = ImageFeedYandexPracticumTests;
+			productReference = 8477FF6F2AFA9ECA00DCE4FA /* ImageFeedYandexPracticumTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		84C0EFA42AED2C12002357DE /* TestsImageFeedYandexPracticum */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84C0EFAB2AED2C12002357DE /* Build configuration list for PBXNativeTarget "TestsImageFeedYandexPracticum" */;
@@ -315,6 +360,10 @@
 					844A82A52A99FB9E0047778E = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					8477FF6E2AFA9ECA00DCE4FA = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 844A82A52A99FB9E0047778E;
+					};
 					84C0EFA42AED2C12002357DE = {
 						CreatedOnToolsVersion = 15.0.1;
 						TestTargetID = 844A82A52A99FB9E0047778E;
@@ -341,6 +390,7 @@
 			targets = (
 				844A82A52A99FB9E0047778E /* ImageFeedYandexPracticum */,
 				84C0EFA42AED2C12002357DE /* TestsImageFeedYandexPracticum */,
+				8477FF6E2AFA9ECA00DCE4FA /* ImageFeedYandexPracticumTests */,
 			);
 		};
 /* End PBXProject section */
@@ -353,6 +403,13 @@
 				844A82B62A99FB9F0047778E /* LaunchScreen.storyboard in Resources */,
 				844A82B32A99FB9F0047778E /* Assets.xcassets in Resources */,
 				844A82B12A99FB9E0047778E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8477FF6D2AFA9ECA00DCE4FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +462,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8477FF6B2AFA9ECA00DCE4FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8477FF722AFA9ECA00DCE4FA /* WebViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84C0EFA12AED2C12002357DE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -415,6 +480,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8477FF742AFA9ECA00DCE4FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844A82A52A99FB9E0047778E /* ImageFeedYandexPracticum */;
+			targetProxy = 8477FF732AFA9ECA00DCE4FA /* PBXContainerItemProxy */;
+		};
 		84C0EFAA2AED2C12002357DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 844A82A52A99FB9E0047778E /* ImageFeedYandexPracticum */;
@@ -622,6 +692,51 @@
 			};
 			name = Release;
 		};
+		8477FF762AFA9ECA00DCE4FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VHDFTCABKC;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.EgorChekulaev.ImageFeedYandexPracticumTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageFeedYandexPracticum.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ImageFeedYandexPracticum";
+			};
+			name = Debug;
+		};
+		8477FF772AFA9ECA00DCE4FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VHDFTCABKC;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.EgorChekulaev.ImageFeedYandexPracticumTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageFeedYandexPracticum.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ImageFeedYandexPracticum";
+			};
+			name = Release;
+		};
 		84C0EFAC2AED2C12002357DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -684,6 +799,15 @@
 			buildConfigurations = (
 				844A82BB2A99FB9F0047778E /* Debug */,
 				844A82BC2A99FB9F0047778E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8477FF752AFA9ECA00DCE4FA /* Build configuration list for PBXNativeTarget "ImageFeedYandexPracticumTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8477FF762AFA9ECA00DCE4FA /* Debug */,
+				8477FF772AFA9ECA00DCE4FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
