@@ -25,6 +25,9 @@ final class AuthViewController: UIViewController {
         if segue.identifier == segueToLoginScreenName {
             guard let webViewController = segue.destination as? WebViewViewController
             else { fatalError("Failed to prepare for \(segueToLoginScreenName)") }
+            let webViewPresenter = WebViewPresenter()
+            webViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewController
             webViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)

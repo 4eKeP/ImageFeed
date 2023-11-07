@@ -8,7 +8,15 @@
 import UIKit
 import WebKit
 
-final class WebViewViewController: UIViewController {
+protocol WebViewViewControllerProtocol: AnyObject {
+    var presenter: WebViewPresenterProtocol? { get set }
+    func load(request: URLRequest)
+}
+
+
+
+final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
+    var presenter: WebViewPresenterProtocol?
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     
@@ -24,9 +32,9 @@ final class WebViewViewController: UIViewController {
         })
         
         webView.navigationDelegate = self
-        
-        loadWebView()
-        
+       
+        presenter?.viewDidLoad()
+        updateProgress()
     }
      
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +46,10 @@ final class WebViewViewController: UIViewController {
         .lightContent
     }
     
+    func load(request: URLRequest) {
+        webView.load(request)
+    }
+    
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.001
@@ -45,21 +57,6 @@ final class WebViewViewController: UIViewController {
     
     @IBAction private func didTapBackButton(_ sender: Any) {
         delegate?.webViewViewControllerDidCancel(self)
-    }
-}
-
-private extension WebViewViewController {
-    func loadWebView() {
-        var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString)
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-        guard let url = urlComponents?.url else { return }
-        let request = URLRequest(url: url)
-        webView.load(request)
     }
 }
 

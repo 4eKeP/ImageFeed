@@ -62,8 +62,7 @@ extension ImagesListService {
     
     private func ImageListRequest(token: String, nextPage: Int) -> URLRequest {
         URLRequest.makeImageListHTTPRequest(path: "/photos"
-                                            + "?client_id=\(Constants.accessKey)"
-                                            + "&&page=\(nextPage)",
+                                            + "?page=\(nextPage)",
                                             httpMethod: "GET",
                                             token: token,
                                             headerField: "Authorization")
