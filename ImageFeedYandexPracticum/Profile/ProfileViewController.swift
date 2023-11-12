@@ -12,7 +12,7 @@ import SwiftKeychainWrapper
 
 
 protocol ProfileViewControllerProtocol: AnyObject {
-    var presenter: ProfilePesenterProtocol? { get set }
+    var presenter: ProfilePresenterProtocol? { get set }
     func updateAvatar(url: URL)
     func updateProfile(profile: Profile)
 }
@@ -63,7 +63,7 @@ final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     private let oauth2TokenStorage = OAuth2TokenStorage.shared
-    var presenter: ProfilePesenterProtocol?
+    var presenter: ProfilePresenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()

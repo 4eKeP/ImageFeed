@@ -8,14 +8,14 @@
 import Foundation
 import WebKit
 
-protocol ProfilePesenterProtocol {
+protocol ProfilePresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
     func cleanTokenDataAndResetToAuth()
     func getProfileImageUrl()
 }
 
-final class ProfilePresenter: ProfilePesenterProtocol {
+final class ProfilePresenter: ProfilePresenterProtocol {
     
     private var profileImageService = ProfileImageService.shared
     private var profileService = ProfileService.shared
