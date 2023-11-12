@@ -43,7 +43,6 @@ final class ImagesListService {
                     photosFromResponce.forEach { photo in
                         decodedPhotos.append(photo.asDomain())
                     }
-                    print(photosFromResponce)
                     self.photos.append(contentsOf: decodedPhotos)
                     NotificationCenter.default.post(name: ImagesListService.didChangeNotification,
                                                     object: self,

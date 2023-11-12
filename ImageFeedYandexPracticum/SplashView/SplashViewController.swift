@@ -56,6 +56,12 @@ final class SplashViewController: UIViewController {
         guard let window = windowScenes?.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
+        //
+        let profilePresenter = ProfilePresenter()
+        let profileViewController = ProfileViewController()
+        profilePresenter.view = profileViewController
+        profileViewController.presenter = profilePresenter
+        //
         window.rootViewController = tabBarController
     }
     

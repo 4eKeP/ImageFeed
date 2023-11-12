@@ -11,6 +11,12 @@ import WebKit
 import SwiftKeychainWrapper
 
 
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePesenterProtocol? { get set }
+    func updateAvatar(url: URL)
+    func updateProfile(profile: Profile)
+}
+
 final class ProfileViewController: UIViewController {
     
     private lazy var profileImageView: UIImageView = {
@@ -57,23 +63,14 @@ final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     private let oauth2TokenStorage = OAuth2TokenStorage.shared
+    var presenter: ProfilePesenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         addConstraints()
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main)
-        { [weak self] _ in
-            guard let self = self else { return }
-            self.updateAvatar()
-        }
-        updateAvatar()
-        guard let profile = profileService.profile else { return }
-        updateProfile(profile: profile)
-        
+        addProfileImageServiceObserver()
+        presenter?.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,24 +82,7 @@ final class ProfileViewController: UIViewController {
         .lightContent
     }
     
-    private func updateAvatar() {
-        let processor = RoundCornerImageProcessor(cornerRadius: 35)
-        
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
-        profileImageView.kf.indicatorType = .activity
-        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
-    }
     
-    private func updateProfile(profile: Profile) {
-        DispatchQueue.main.async {
-            self.nameLabel.text = profile.name
-            self.loginNameLabel.text = profile.loginName
-            self.descriptionLabel.text = profile.bio
-        }
-    }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -148,28 +128,53 @@ final class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
         alert.addAction(UIAlertAction(title: "Да", style: .default) { [weak self] _ in
             guard let self = self else {return}
-            self.cleanTokenDataAndResetToAuth()
+            self.presenter?.cleanTokenDataAndResetToAuth()
         })
                 self.present(alert, animated: true, completion: nil)
     }
     
-    private func cleanTokenDataAndResetToAuth() {
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        WKWebsiteDataStore.default().fetchDataRecords(
-            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
-        ) { records in
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(
-                    ofTypes: record.dataTypes,
-                    for: [record],
-                    completionHandler: {}
-                )
-            }
+//    private func cleanTokenDataAndResetToAuth() {
+//        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+//        WKWebsiteDataStore.default().fetchDataRecords(
+//            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
+//        ) { records in
+//            records.forEach { record in
+//                WKWebsiteDataStore.default().removeData(
+//                    ofTypes: record.dataTypes,
+//                    for: [record],
+//                    completionHandler: {}
+//                )
+//            }
+//        }
+//        OAuth2TokenStorage.deleteToken()
+//        guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
+//        window.rootViewController = SplashViewController()
+//        window.makeKeyAndVisible()
+//    }
+    
+    func addProfileImageServiceObserver() {
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main)
+        { [weak self] _ in
+            guard let self = self else { return }
+            self.presenter?.getProfileImageUrl()
         }
-        OAuth2TokenStorage.deleteToken()
-        guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
-        window.rootViewController = SplashViewController()
-        window.makeKeyAndVisible()
+    }
+}
+
+extension ProfileViewController: ProfileViewControllerProtocol {
+    func updateAvatar(url: URL) {
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        profileImageView.kf.indicatorType = .activity
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
+    }
+    
+    func updateProfile(profile: Profile) {
+            self.nameLabel.text = profile.name
+            self.loginNameLabel.text = profile.loginName
+            self.descriptionLabel.text = profile.bio
     }
 }
 
