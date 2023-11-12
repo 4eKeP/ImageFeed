@@ -33,7 +33,8 @@ final class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
+    //    setupTableView()
+        presenter.viewDidLoad()
         startObserveImagesListChanges()
     }
     
@@ -152,7 +153,7 @@ extension ImagesListViewController {
         imagesListObserver = NotificationCenter.default.addObserver(forName: ImagesListService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.presenter.updateTableViewAnimated()
         }
-        presenter.fetchPhotos()
+    //    presenter.fetchPhotos()
     }
     private func stopObserveImagesListChanges() {
         NotificationCenter.default.removeObserver(self, name: ImagesListService.didChangeNotification, object: nil)
@@ -165,5 +166,4 @@ extension ImagesListViewController: ImagesListViewControllerProtocol {
         tableView.delegate = self
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
-    
 }
