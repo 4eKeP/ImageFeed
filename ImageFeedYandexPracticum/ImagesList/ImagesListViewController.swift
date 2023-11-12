@@ -88,6 +88,8 @@ extension ImagesListViewController {
         
         cell.delegate = self
         
+        cell.likeButton.accessibilityIdentifier = "LikeButton"
+        
         let imageUrl = presenter.returnPhoto(indexPath: indexPath).thumbImageURL
         
         let placeholder = UIImage(named: "image_cell_placeholder")

@@ -164,6 +164,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4bK-fB-a1s"/>
                     <connections>
+                        <outlet property="backButton" destination="JZm-5d-Nta" id="S4e-E4-MX2"/>
                         <outlet property="imageView" destination="pnl-F5-xPd" id="1qg-dF-bah"/>
                         <outlet property="scrollView" destination="xxb-Yd-tZ9" id="Gio-ac-JD3"/>
                     </connections>
@@ -183,6 +184,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQX-6J-7jP">
                                 <rect key="frame" x="16" y="640" width="343" height="48"/>
                                 <color key="backgroundColor" name="YPWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="aFI-Bx-hPH"/>
                                 </constraints>
@@ -220,6 +222,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zvc-9m-P1T"/>
+                    <connections>
+                        <outlet property="authButton" destination="DQX-6J-7jP" id="3z6-F0-lRN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7SM-Df-pSY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

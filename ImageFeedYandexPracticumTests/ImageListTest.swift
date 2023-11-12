@@ -79,18 +79,18 @@ final class ImagesListViewTests: XCTestCase {
     let presenter = ImagesListViewPresenterSpy()
     let indexPath = IndexPath(row: 1, section: 0)
     
+    override func setUpWithError() throws {
+      viewController.presenter = presenter
+      presenter.view = viewController
+    }
+    
     func testViewDidLoadCalled() {
-        viewController.presenter = presenter
-        presenter.view = viewController
-        
         _ = viewController.view
         
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
     func testUpdateTableViewAnimated() {
-        viewController.presenter = presenter
-        presenter.view = viewController
         
         _ = viewController.view
         presenter.updateTableViewAnimated()
@@ -99,8 +99,6 @@ final class ImagesListViewTests: XCTestCase {
     }
     
     func testFetchPhotos() {
-        viewController.presenter = presenter
-        presenter.view = viewController
         
         _ = viewController.view
         presenter.fetchPhotos()
@@ -109,8 +107,6 @@ final class ImagesListViewTests: XCTestCase {
     }
     
     func testCalculateHeightForRow() {
-        viewController.presenter = presenter
-        presenter.view = viewController
         
         _ = viewController.view
         let result = presenter.calculateHeightForRow(indexPath: indexPath)
@@ -121,8 +117,6 @@ final class ImagesListViewTests: XCTestCase {
     }
     
     func testChekIfNextPageNeeded() {
-        viewController.presenter = presenter
-        presenter.view = viewController
         
         _ = viewController.view
         presenter.chekIfNextPageNeeded(indexPath: indexPath)
@@ -132,8 +126,6 @@ final class ImagesListViewTests: XCTestCase {
     }
     
     func testImagesListCellDidTapLike() {
-        viewController.presenter = presenter
-        presenter.view = viewController
         
         _ = viewController.view
         presenter.imagesListCellDidTapLike(ImagesListCell(), indexPath: indexPath)
@@ -143,11 +135,9 @@ final class ImagesListViewTests: XCTestCase {
     }
     
     func testReturnPhoto() {
-        viewController.presenter = presenter
-        presenter.view = viewController
         
         _ = viewController.view
-        let result = presenter.returnPhoto(indexPath: indexPath)
+        let _ = presenter.returnPhoto(indexPath: indexPath)
         
         XCTAssertTrue(presenter.returnPhotoCalled)
         XCTAssertTrue(presenter.returnPhotoAtIndex)

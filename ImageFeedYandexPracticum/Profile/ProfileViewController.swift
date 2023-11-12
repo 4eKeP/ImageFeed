@@ -56,6 +56,7 @@ final class ProfileViewController: UIViewController {
         var button = UIButton()
         guard let logoutImage = UIImage(named: "logout_button") else {return button}
         button.setImage(logoutImage, for: .normal)
+        button.accessibilityIdentifier = "LogoutButton"
         button.addTarget(self, action: #selector(logoutButtonDidPressed), for: .touchUpInside)
         return button
     }()
@@ -125,6 +126,7 @@ final class ProfileViewController: UIViewController {
             title: "Пока, пока!",
             message: "Уверены что хотите выйти?",
             preferredStyle: .alert)
+        alert.view.accessibilityIdentifier = "Alert"
         alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
         alert.addAction(UIAlertAction(title: "Да", style: .default) { [weak self] _ in
             guard let self = self else {return}
@@ -132,25 +134,6 @@ final class ProfileViewController: UIViewController {
         })
                 self.present(alert, animated: true, completion: nil)
     }
-    
-//    private func cleanTokenDataAndResetToAuth() {
-//        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-//        WKWebsiteDataStore.default().fetchDataRecords(
-//            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()
-//        ) { records in
-//            records.forEach { record in
-//                WKWebsiteDataStore.default().removeData(
-//                    ofTypes: record.dataTypes,
-//                    for: [record],
-//                    completionHandler: {}
-//                )
-//            }
-//        }
-//        OAuth2TokenStorage.deleteToken()
-//        guard let window = UIApplication.shared.windows.first else {fatalError("окно не обноружено")}
-//        window.rootViewController = SplashViewController()
-//        window.makeKeyAndVisible()
-//    }
     
     func addProfileImageServiceObserver() {
         profileImageServiceObserver = NotificationCenter.default.addObserver(

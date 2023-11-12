@@ -57,24 +57,23 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
 
 final class ProfilePresenterTests: XCTestCase {
     
-    // Presenter Tests
-    
     let viewController = ProfileViewController()
     let presenter = ProfilePresenterSpy()
     
+    override func setUpWithError() throws {
+      viewController.presenter = presenter
+      presenter.view = viewController
+    }
+    
     func testViewControllerCallViewDidLoad() {
-        viewController.presenter = presenter
-        presenter.view = viewController
-        
+       
         _ = viewController.view
         
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
     func testCleanTokenDataAndResetToAuth() {
-        viewController.presenter = presenter
-        presenter.view = viewController
-        
+       
         _ = viewController.view
         presenter.cleanTokenDataAndResetToAuth()
         
@@ -82,9 +81,7 @@ final class ProfilePresenterTests: XCTestCase {
     }
     
     func testGetProfileImageUrl() {
-        viewController.presenter = presenter
-        presenter.view = viewController
-        
+       
         _ = viewController.view
         presenter.getProfileImageUrl()
         
@@ -98,9 +95,6 @@ final class ProfileViewControllerTests: XCTestCase {
     let presenter = ProfilePresenter()
     
     func testUpdateProfileCall() {
-        
-        viewController.presenter = presenter
-        presenter.view = viewController
         
         let testUser = "test"
         let testProfile = Profile(from: ProfileResult(username: testUser, firstName: testUser, lastName: testUser, bio: testUser))

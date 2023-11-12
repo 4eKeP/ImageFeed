@@ -9,12 +9,18 @@ import UIKit
 
 final class AuthViewController: UIViewController {
     private let segueToLoginScreenName = "ShowWebView"
+    @IBOutlet private weak var authButton: UIButton!
     
     weak var delegate: AuthViewControllerDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        authButton.accessibilityIdentifier = "Authenticate"
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
