@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+//потом переделать код что бы убрать UIKit и заменить на Fondation 
 protocol ImagesListViewPresenterProtocol {
     var view: ImagesListViewControllerProtocol? { get set }
     var photosCount: Int { get }
@@ -64,8 +64,10 @@ final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
     }
     
     func chekIfNextPageNeeded(indexPath: IndexPath) {
-        if indexPath.row + 1 == photos.count {
-            imagesListService.fetchPhotosNextPage()
+        if !ProcessInfo.processInfo.arguments.contains("testMode") {
+            if indexPath.row + 1 == photos.count {
+                imagesListService.fetchPhotosNextPage()
+            }
         }
     }
     
