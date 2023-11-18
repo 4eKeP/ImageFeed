@@ -26,14 +26,15 @@ final class AuthHelper: AuthHelperProtocol {
     }
     
     func authURL() -> URL {
-        var urlComponents = URLComponents(string: AuthConfiguration.standard.authURLString)!
+        guard var urlComponents = URLComponents(string: AuthConfiguration.standard.authURLString) else {fatalError("Can't constroct AuthURL from Components")}
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: AuthConfiguration.standard.accessKey),
             URLQueryItem(name: "redirect_uri", value: AuthConfiguration.standard.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "scope", value: AuthConfiguration.standard.accessScope)
         ]
-        return urlComponents.url!
+        guard let url = urlComponents.url else {fatalError("Can't constroct AuthURL")}
+        return url
     }
     
     func code(from url: URL) -> String? {

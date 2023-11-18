@@ -51,7 +51,7 @@ final class ImagesListViewPresenterSpy: ImagesListViewPresenterProtocol {
         return CGFloat(1)
     }
     
-    func chekIfNextPageNeeded(indexPath: IndexPath) {
+    func fetchNextPageIfNeeded(indexPath: IndexPath) {
         chekIfNextPageNeededCalled = true
         if indexPath == IndexPath(row: 1, section: 0) {
             chekIfNextPageNeededAtIndex = true
@@ -70,7 +70,13 @@ final class ImagesListViewPresenterSpy: ImagesListViewPresenterProtocol {
         if indexPath == IndexPath(row: 1, section: 0) {
             returnPhotoAtIndex = true
         }
-        return Photo.init(id: "test", size: CGSize(), createdAt: Date(), welcomeDescription: "test", thumbImageURL: URL(string: "https://www.google.com")!, largeImageURL: URL(string: "https://www.google.com")!, isLiked: false)
+        return Photo.init(id: "test",
+                          size: CGSize(),
+                          createdAt: Date(),
+                          welcomeDescription: "test",
+                          thumbImageURL: URL(string: "https://www.google.com")!,
+                          largeImageURL: URL(string: "https://www.google.com")!,
+                          isLiked: false)
     }
 }
 
@@ -119,7 +125,7 @@ final class ImagesListViewTests: XCTestCase {
     func testChekIfNextPageNeeded() {
         
         _ = viewController.view
-        presenter.chekIfNextPageNeeded(indexPath: indexPath)
+        presenter.fetchNextPageIfNeeded(indexPath: indexPath)
         
         XCTAssertTrue(presenter.chekIfNextPageNeededCalled)
         XCTAssertTrue(presenter.chekIfNextPageNeededAtIndex)

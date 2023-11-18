@@ -8,10 +8,14 @@
 import UIKit
 
 final class AuthViewController: UIViewController {
-    private let segueToLoginScreenName = "ShowWebView"
+    weak var delegate: AuthViewControllerDelegate?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     @IBOutlet private weak var authButton: UIButton!
     
-    weak var delegate: AuthViewControllerDelegate?
+    private let segueToLoginScreenName = "ShowWebView"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -21,10 +25,6 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         authButton.accessibilityIdentifier = "Authenticate"
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

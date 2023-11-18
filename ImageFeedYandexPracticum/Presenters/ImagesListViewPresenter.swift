@@ -14,7 +14,7 @@ protocol ImagesListViewPresenterProtocol {
     func updateTableViewAnimated()
     func fetchPhotos()
     func calculateHeightForRow(indexPath: IndexPath) -> CGFloat
-    func chekIfNextPageNeeded(indexPath: IndexPath)
+    func fetchNextPageIfNeeded(indexPath: IndexPath)
     func imagesListCellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath)
     func returnPhoto(indexPath: IndexPath) -> Photo
 }
@@ -63,7 +63,7 @@ final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
         return cellHeight
     }
     
-    func chekIfNextPageNeeded(indexPath: IndexPath) {
+    func fetchNextPageIfNeeded(indexPath: IndexPath) {
         if !ProcessInfo.processInfo.arguments.contains("testMode") {
             if indexPath.row + 1 == photos.count {
                 imagesListService.fetchPhotosNextPage()

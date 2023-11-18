@@ -155,9 +155,9 @@ extension ProfileViewController: ProfileViewControllerProtocol {
     }
     
     func updateProfile(profile: Profile) {
-            self.nameLabel.text = profile.name
-            self.loginNameLabel.text = profile.loginName
-            self.descriptionLabel.text = profile.bio
+            nameLabel.text = profile.name
+            loginNameLabel.text = profile.loginName
+            descriptionLabel.text = profile.bio
     }
 }
 

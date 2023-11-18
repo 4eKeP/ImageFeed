@@ -19,10 +19,11 @@ protocol WebViewViewControllerProtocol: AnyObject {
 
 final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     var presenter: WebViewPresenterProtocol?
+    weak var delegate: WebViewViewControllerDelegate?
+    
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     
-    weak var delegate: WebViewViewControllerDelegate?
     private var estimatedProgressObservation: NSKeyValueObservation?
     
     override func viewDidLoad() {
@@ -58,7 +59,7 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     }
     
     func setProgressValue(_ newValue: Float) {
-        progressView.progress = newValue
+        progressView.setProgress(newValue, animated: true)
     }
     
     @IBAction private func didTapBackButton(_ sender: Any) {

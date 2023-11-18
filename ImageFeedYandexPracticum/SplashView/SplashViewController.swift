@@ -50,7 +50,7 @@ final class SplashViewController: UIViewController {
         wasChecked = true
         
         if oauth2TokenStorage.token != nil {
-            let token = oauth2TokenStorage.token!
+            guard let token = oauth2TokenStorage.token else { fatalError("Unable return Auth token")}
             UIBlockingProgressHUD.show()
             fetchProfile(token: token)
         } else {

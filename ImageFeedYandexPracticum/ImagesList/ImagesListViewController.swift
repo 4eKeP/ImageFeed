@@ -33,7 +33,6 @@ final class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    //    setupTableView()
         presenter.viewDidLoad()
         startObserveImagesListChanges()
     }
@@ -70,7 +69,6 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -78,7 +76,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        presenter.chekIfNextPageNeeded(indexPath: indexPath)
+        presenter.fetchNextPageIfNeeded(indexPath: indexPath)
     }
 }
 
@@ -146,7 +144,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
             message: "Не удалось поставить лайк",
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -155,7 +153,6 @@ extension ImagesListViewController {
         imagesListObserver = NotificationCenter.default.addObserver(forName: ImagesListService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.presenter.updateTableViewAnimated()
         }
-    //    presenter.fetchPhotos()
     }
     private func stopObserveImagesListChanges() {
         NotificationCenter.default.removeObserver(self, name: ImagesListService.didChangeNotification, object: nil)

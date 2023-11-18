@@ -30,10 +30,8 @@ extension TabBarViewController {
         guard let imagesListViewController = imagesListViewController as? ImagesListViewController else { return }
         imagesListPresenter.view = imagesListViewController
         imagesListViewController.presenter = imagesListPresenter
-        ///
         
         setupTabBarItemImage(for: imagesListViewController, image: "tab_editorial_active")
-        ///
         let profilePresenter = ProfilePresenter()
         let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileViewController")
         guard let profileViewController = profileViewController as? ProfileViewController else { return }

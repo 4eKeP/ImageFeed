@@ -34,7 +34,7 @@ final class ImageFeedYandexPracticumUITests: XCTestCase {
             XCTAssertTrue(loginTextField.waitForExistence(timeout: 3))
             loginTextField.tap()
             loginTextField.typeText(TestConstants.email)
-            webView.tap()
+            app.toolbars.buttons["Done"].tap()
             
             let passwordTextField = webView.descendants(matching: .secureTextField).element
             XCTAssertTrue(passwordTextField.waitForExistence(timeout: 3))
