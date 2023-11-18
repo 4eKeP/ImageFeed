@@ -43,7 +43,6 @@ final class ImagesListService {
                     photosFromResponce.forEach { photo in
                         decodedPhotos.append(photo.asDomain())
                     }
-                    print(photosFromResponce)
                     self.photos.append(contentsOf: decodedPhotos)
                     NotificationCenter.default.post(name: ImagesListService.didChangeNotification,
                                                     object: self,
@@ -62,8 +61,7 @@ extension ImagesListService {
     
     private func ImageListRequest(token: String, nextPage: Int) -> URLRequest {
         URLRequest.makeImageListHTTPRequest(path: "/photos"
-                                            + "?client_id=\(Constants.accessKey)"
-                                            + "&&page=\(nextPage)",
+                                            + "?page=\(nextPage)",
                                             httpMethod: "GET",
                                             token: token,
                                             headerField: "Authorization")

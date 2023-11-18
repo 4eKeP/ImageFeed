@@ -23,17 +23,11 @@ final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let imagesListService = ImagesListService.shared
+    private var wasChecked = false
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if oauth2TokenStorage.token != nil {
-            let token = oauth2TokenStorage.token!
-            UIBlockingProgressHUD.show()
-            fetchProfile(token: token)
-        } else {
-            switchToAuthViewController()
-        }
+        chekAuthStatus()
     }
     
     override func viewDidLoad() {
@@ -50,12 +44,31 @@ final class SplashViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
+    
+    private func chekAuthStatus() {
+        guard !wasChecked else { return }
+        wasChecked = true
+        
+        if oauth2TokenStorage.token != nil {
+            guard let token = oauth2TokenStorage.token else { fatalError("Unable return Auth token")}
+            UIBlockingProgressHUD.show()
+            fetchProfile(token: token)
+        } else {
+            switchToAuthViewController()
+        }
+    }
     private func switchToTabBarViewController() {
         let scenes = UIApplication.shared.connectedScenes
         let windowScenes = scenes.first as? UIWindowScene
         guard let window = windowScenes?.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
+        //
+        let profilePresenter = ProfilePresenter()
+        let profileViewController = ProfileViewController()
+        profilePresenter.view = profileViewController
+        profileViewController.presenter = profilePresenter
+        //
         window.rootViewController = tabBarController
     }
     
