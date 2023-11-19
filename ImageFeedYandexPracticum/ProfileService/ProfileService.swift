@@ -14,7 +14,6 @@ final class ProfileService {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastData: Data?
-    
     private(set) var profile: Profile?
     
     

@@ -12,5 +12,5 @@ struct UserResult: Codable {
 }
 
 struct ProfileURL: Codable {
-    let small: String?
+    let medium: String?
 }
