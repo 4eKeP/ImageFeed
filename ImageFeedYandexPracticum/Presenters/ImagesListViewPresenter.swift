@@ -5,8 +5,8 @@
 //  Created by admin on 11.11.2023.
 //
 
-import UIKit
-//потом переделать код что бы убрать UIKit и заменить на Fondation 
+import Foundation
+//потом переделать код что бы убрать UIKit и заменить на Fondation
 protocol ImagesListViewPresenterProtocol {
     var view: ImagesListViewControllerProtocol? { get set }
     var photosCount: Int { get }
@@ -55,7 +55,7 @@ final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
     
     func calculateHeightForRow(indexPath: IndexPath) -> CGFloat {
         guard let view = view else { return 0 }
-        let imageInsert = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        let imageInsert = (top: CGFloat(4), left: CGFloat(16), bottom: CGFloat(4), right: CGFloat(16))
         let imageViewWidth = view.tableView.bounds.width - imageInsert.left - imageInsert.right
         let imageWidth = photos[indexPath.row].size.width
         let scale = imageViewWidth / imageWidth

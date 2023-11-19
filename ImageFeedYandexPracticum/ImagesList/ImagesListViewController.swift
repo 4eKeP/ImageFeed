@@ -42,12 +42,7 @@ final class ImagesListViewController: UIViewController {
         stopObserveImagesListChanges()
     }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
+    
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -60,7 +55,11 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imagesListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        configCell(for: imagesListCell, with: indexPath)
+        imagesListCell.delegate = self
+        let photo = presenter.returnPhoto(indexPath: indexPath)
+        if imagesListCell.configCell(with: photo) {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
         return imagesListCell
     }
 }
@@ -78,39 +77,6 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         presenter.fetchNextPageIfNeeded(indexPath: indexPath)
     }
-}
-
-extension ImagesListViewController {
-    // на будущее перенести функцию в ячейку
-    private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        
-        cell.delegate = self
-        
-        cell.likeButton.accessibilityIdentifier = "LikeButton"
-        
-        let imageUrl = presenter.returnPhoto(indexPath: indexPath).thumbImageURL
-        
-        let placeholder = UIImage(named: "image_cell_placeholder")
-        
-        cell.cellImage.kf.indicatorType = .activity
-        
-        cell.cellImage.kf.setImage(with: imageUrl, placeholder: placeholder) { [weak self] _ in
-            guard let self = self else { return }
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-            cell.cellImage.kf.indicatorType = .none
-            
-        }
-        
-        guard let date = presenter.returnPhoto(indexPath: indexPath).createdAt else { return }
-        cell.dateLabel.text = dateFormatter.string(from: date)
-        
-        let isLiked = presenter.returnPhoto(indexPath: indexPath).isLiked
-        
-        let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No_Active")
-        
-        cell.likeButton.setImage(likeImage, for: .normal)
-    }
-    
 }
 
 extension ImagesListViewController {
