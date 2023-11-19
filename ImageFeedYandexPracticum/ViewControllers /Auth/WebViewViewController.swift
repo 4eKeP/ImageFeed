@@ -15,7 +15,10 @@ protocol WebViewViewControllerProtocol: AnyObject {
     func setProgressValue(_ newValue: Float)
 }
 
-
+protocol WebViewViewControllerDelegate: AnyObject {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+}
 
 final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     var presenter: WebViewPresenterProtocol?
